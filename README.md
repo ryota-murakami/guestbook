@@ -10,6 +10,6 @@ This is contain auth credencial because it's tutorial app and easy to launch lat
 git clone git@github.com:ryota-murakami/t3-learning-app.git
 cd t3-learning-app.git
 npm i
-cp .env .env.example
+cp .env.example .env
 npm run dev
 ```
