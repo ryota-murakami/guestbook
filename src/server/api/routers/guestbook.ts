@@ -23,7 +23,7 @@ export const guestbookRouter = createTRPCRouter({
   postMessage: publicProcedure
     .input(
       z.object({
-        messsage: z.string(),
+        message: z.string(),
         name: z.string(),
       })
     )
@@ -31,7 +31,7 @@ export const guestbookRouter = createTRPCRouter({
       try {
         await ctx.prisma.guestbook.create({
           data: {
-            message: input.messsage,
+            message: input.message,
             name: input.name,
           },
         })
