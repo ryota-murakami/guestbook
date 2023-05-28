@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import { useState } from 'react'
 
 import { api } from '../utils/api'
 
@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <main className="flex flex-col items-center">
-      <h1 className="text-3xl pt-4">Guestbook</h1>
+      <h1 className="pt-4 text-3xl">Guestbook</h1>
       <p>
         Tutorial for <code>create-t3-app</code>
       </p>
@@ -23,8 +23,9 @@ const Home = () => {
               <p className="mb-4 text-center">hi {session.user?.name}</p>
               <button
                 type="button"
-                className="mx-auto block rounded-md bg-neutral-800 py-3 px-6 text-center hover:bg-neutral-700"
+                className="mx-auto block rounded-md bg-neutral-800 px-6 py-3 text-center hover:bg-neutral-700"
                 onClick={() => {
+                  //eslint-disable-next-line no-console
                   signOut().catch(console.log)
                 }}
               >
@@ -37,8 +38,9 @@ const Home = () => {
           ) : (
             <button
               type="button"
-              className="mx-auto block rounded-md bg-neutral-800 py-3 px-6 text-center hover:bg-neutral-700"
+              className="mx-auto block rounded-md bg-neutral-800 px-6 py-3 text-center hover:bg-neutral-700"
               onClick={() => {
+                //eslint-disable-next-line no-console
                 signIn('discord').catch(console.log)
               }}
             >
@@ -46,7 +48,7 @@ const Home = () => {
             </button>
           )}
           <div className="pt-10">
-            <GuestbookEntries/>
+            <GuestbookEntries />
           </div>
         </div>
       </div>
@@ -56,21 +58,16 @@ const Home = () => {
 export default Home
 
 const GuestbookEntries = () => {
-  //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data: guestbookEntries, isLoading } = api.guestbook.getAll.useQuery()
 
   if (isLoading) return <div>Fetching messages...</div>
 
   return (
     <div className="flex flex-col gap-4">
-      {/* eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access */}
       {guestbookEntries?.map((entry, index) => {
         return (
-          //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           <div key={index}>
-            {/* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */}
             <p>{entry.message}</p>
-            {/* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */}
             <span>- {entry.name}</span>
           </div>
         )
@@ -83,26 +80,22 @@ const Form = () => {
   const [message, setMessage] = useState('')
   const { data: session, status } = useSession()
 
-
-  const utils = api.useContext();
+  const utils = api.useContext()
   const postMessage = api.guestbook.postMessage.useMutation({
     onMutate: async (newEntry) => {
-      await utils.guestbook.getAll.cancel();
-      //eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
+      await utils.guestbook.getAll.cancel()
       utils.guestbook.getAll.setData(undefined, (prevEntries) => {
         if (prevEntries) {
-          //eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-assignment
-          return [newEntry, ...prevEntries];
+          return [newEntry, ...prevEntries]
         } else {
-          return [newEntry];
+          return [newEntry]
         }
-      });
+      })
     },
     onSettled: async () => {
-      await utils.guestbook.getAll.invalidate();
+      await utils.guestbook.getAll.invalidate()
     },
-  });
+  })
 
   if (status !== 'authenticated') return null
 
@@ -112,10 +105,8 @@ const Form = () => {
       onSubmit={(event) => {
         event.preventDefault()
         postMessage.mutate({
+          message,
           name: session.user?.name as string,
-          //eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          //@ts-ignore
-          message
         })
         setMessage('')
       }}
