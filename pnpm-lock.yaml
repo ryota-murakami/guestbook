@@ -77,8 +77,8 @@ devDependencies:
     specifier: ^8.8.0
     version: 8.8.0(eslint@8.44.0)
   eslint-config-ts-prefixer:
-    specifier: ^0.12.3
-    version: 0.12.3(typescript@5.1.6)
+    specifier: ^0.21.0
+    version: 0.21.0
   eslint-import-resolver-typescript:
     specifier: ^3.5.5
     version: 3.5.5(@typescript-eslint/parser@5.61.0)(eslint-plugin-import@2.27.5)(eslint@8.44.0)
@@ -954,9 +954,9 @@ packages:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
     dev: true
 
-  /commander@10.0.1:
-    resolution: {integrity: sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==}
-    engines: {node: '>=14'}
+  /commander@11.0.0:
+    resolution: {integrity: sha512-9HMlXtt/BNoYr8ooyjjNRdIilOTkVJXB+GhxMTtOKwk0R4j4lS4NpjuqmRxroBfnfTSHQIHQB7wryHhXarNjmQ==}
+    engines: {node: '>=16'}
     dev: true
 
   /commander@4.1.1:
@@ -1201,18 +1201,12 @@ packages:
       eslint: 8.44.0
     dev: true
 
-  /eslint-config-ts-prefixer@0.12.3(typescript@5.1.6):
-    resolution: {integrity: sha512-LjjaEKQgV0jiTIJ1gGTKaDNIweB+DzKI0bDK8OqOKEiEFXRU3ITuMretCoK33OkTsxm6l23GCEVauq35rHQscA==}
+  /eslint-config-ts-prefixer@0.21.0:
+    resolution: {integrity: sha512-Kao56X3KcCgg3KUYfNVDED86pXbfqgOoejZlIk5PB/QPBKb6CJtS0yuyDc71JbHje8+wQ6zJlrdN9Rp7s3oTtA==}
     hasBin: true
-    peerDependencies:
-      typescript: '>=4.3.0'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
     dependencies:
-      commander: 10.0.1
+      commander: 11.0.0
       inquirer: 8.2.6
-      typescript: 5.1.6
     dev: true
 
   /eslint-import-resolver-node@0.3.8:
