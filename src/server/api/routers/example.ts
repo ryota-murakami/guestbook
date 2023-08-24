@@ -7,7 +7,7 @@ import {
 } from '~/server/api/trpc'
 
 export const exampleRouter = createTRPCRouter({
-  getAll: publicProcedure.query(({ ctx }) => {
+  getAll: publicProcedure.query(async ({ ctx }) => {
     return ctx.prisma.example.findMany()
   }),
 
