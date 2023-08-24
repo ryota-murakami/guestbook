@@ -25,7 +25,7 @@ export const guestbookRouter = createTRPCRouter({
       z.object({
         message: z.string(),
         name: z.string(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       try {
