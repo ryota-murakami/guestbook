@@ -40,6 +40,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Setup .env
-        run: mv .env.example .env
+        run: touch .env && echo ${{ secrets.DATABASE_URL }} >> .env
       - name: Build
         run: pnpm build
