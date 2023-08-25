@@ -40,6 +40,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Setup .env
-        run: touch .env && echo ${{ secrets.DATABASE_URL }} >> .env
+        run: |
+          touch .env && echo ${{ secrets.DATABASE_URL }} >> .env |
+          echo ${{ secrets.NEXTAUTH_URL }} >> .env |
+          echo ${{ secrets.NEXTAUTH_SECRET }} >> .env |
+          echo ${{ secrets.DISCORD_CLIENT_ID }} >> .env |
+          echo ${{ secrets.DISCORD_CLIENT_SECRET }} >> .env |
+          
       - name: Build
         run: pnpm build
