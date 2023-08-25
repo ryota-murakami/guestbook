@@ -40,6 +40,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Setup .env
-        run: mv .env.sample .env
+        run: mv .env.example .env
       - name: Build
         run: pnpm build

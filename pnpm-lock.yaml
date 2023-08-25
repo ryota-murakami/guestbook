@@ -49,6 +49,9 @@ dependencies:
     version: 3.22.2
 
 devDependencies:
+  '@types/eslint':
+    specifier: ^8.44.2
+    version: 8.44.2
   '@types/node':
     specifier: ^20.5.6
     version: 20.5.6
@@ -74,8 +77,8 @@ devDependencies:
     specifier: ^9.0.0
     version: 9.0.0(eslint@8.47.0)
   eslint-config-ts-prefixer:
-    specifier: ^1.0.2
-    version: 1.0.2
+    specifier: ^1.2.0
+    version: 1.2.0
   eslint-import-resolver-typescript:
     specifier: ^3.6.0
     version: 3.6.0(@typescript-eslint/parser@6.4.1)(eslint-plugin-import@2.28.1)(eslint@8.47.0)
@@ -84,7 +87,7 @@ devDependencies:
     version: 2.28.1(@typescript-eslint/parser@6.4.1)(eslint-import-resolver-typescript@3.6.0)(eslint@8.47.0)
   eslint-plugin-prettier:
     specifier: ^5.0.0
-    version: 5.0.0(eslint-config-prettier@9.0.0)(eslint@8.47.0)(prettier@3.0.2)
+    version: 5.0.0(@types/eslint@8.44.2)(eslint-config-prettier@9.0.0)(eslint@8.47.0)(prettier@3.0.2)
   eslint-plugin-sort-keys-fix:
     specifier: ^1.1.2
     version: 1.1.2
@@ -587,6 +590,17 @@ packages:
   /@trpc/server@10.37.1:
     resolution: {integrity: sha512-r3VeA319/braYMBIzj+XLgLKQ9lJSVglvPvP9HUv4kr5w6Y5grQMxMcExhTiZWltE9bnSJHKtBBzHafOo7KC8A==}
     dev: false
+
+  /@types/eslint@8.44.2:
+    resolution: {integrity: sha512-sdPRb9K6iL5XZOmBubg8yiFp5yS/JdUDQsq5e6h95km91MCYMuvp7mh1fjPEYUhvHepKpZOjnEaMBR4PxjWDzg==}
+    dependencies:
+      '@types/estree': 1.0.1
+      '@types/json-schema': 7.0.12
+    dev: true
+
+  /@types/estree@1.0.1:
+    resolution: {integrity: sha512-LG4opVs2ANWZ1TJoKc937iMmNstM/d0ae1vNbnBvBhqCSezgVUOzcLCqbI5elV8Vy6WKwKjaqR+zO9VKirBBCA==}
+    dev: true
 
   /@types/json-schema@7.0.12:
     resolution: {integrity: sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==}
@@ -1350,8 +1364,8 @@ packages:
       eslint: 8.47.0
     dev: true
 
-  /eslint-config-ts-prefixer@1.0.2:
-    resolution: {integrity: sha512-0in2z8BzZSBgbPboWn5AtC8OKJeiDP4+gWKvdosA97IcZSuu7L5ZJhahxV9Ga+7zwejbAqHFbK7lO/B8xa5Y/A==}
+  /eslint-config-ts-prefixer@1.2.0:
+    resolution: {integrity: sha512-mJ/PwcBrzzyVoJR2wQNWugGS3rpI541CcSsesblWlCMYJSI7SI7GMowuShDw7BWCeNe+bxA9pKQWC8h3xs3zDw==}
     hasBin: true
     dependencies:
       '@inquirer/prompts': 3.0.3
@@ -1457,7 +1471,7 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-prettier@5.0.0(eslint-config-prettier@9.0.0)(eslint@8.47.0)(prettier@3.0.2):
+  /eslint-plugin-prettier@5.0.0(@types/eslint@8.44.2)(eslint-config-prettier@9.0.0)(eslint@8.47.0)(prettier@3.0.2):
     resolution: {integrity: sha512-AgaZCVuYDXHUGxj/ZGu1u8H8CYgDY3iG6w5kUFw4AzMVXzB7VvbKgYR4nATIN+OvUrghMbiDLeimVjVY5ilq3w==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -1471,6 +1485,7 @@ packages:
       eslint-config-prettier:
         optional: true
     dependencies:
+      '@types/eslint': 8.44.2
       eslint: 8.47.0
       eslint-config-prettier: 9.0.0(eslint@8.47.0)
       prettier: 3.0.2
