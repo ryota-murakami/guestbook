@@ -25,7 +25,6 @@ const Home = () => {
                 type="button"
                 className="mx-auto block rounded-md bg-neutral-800 px-6 py-3 text-center hover:bg-neutral-700"
                 onClick={() => {
-                  //eslint-disable-next-line no-console
                   signOut().catch(console.log)
                 }}
               >
@@ -40,7 +39,6 @@ const Home = () => {
               type="button"
               className="mx-auto block rounded-md bg-neutral-800 px-6 py-3 text-center hover:bg-neutral-700"
               onClick={() => {
-                //eslint-disable-next-line no-console
                 signIn('discord').catch(console.log)
               }}
             >

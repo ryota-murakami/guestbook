@@ -15,7 +15,6 @@ export const guestbookRouter = createTRPCRouter({
         },
       })
     } catch (error) {
-      //eslint-disable-next-line no-console
       console.log('error', error)
     }
   }),
@@ -35,7 +34,6 @@ export const guestbookRouter = createTRPCRouter({
           },
         })
       } catch (error) {
-        //eslint-disable-next-line no-console
         console.log(error)
       }
     }),
