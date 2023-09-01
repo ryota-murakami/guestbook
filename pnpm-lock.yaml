@@ -53,8 +53,8 @@ devDependencies:
     specifier: ^8.44.2
     version: 8.44.2
   '@types/node':
-    specifier: ^20.5.7
-    version: 20.5.7
+    specifier: ^20.5.8
+    version: 20.5.8
   '@types/react':
     specifier: ^18.2.21
     version: 18.2.21
@@ -212,7 +212,7 @@ packages:
     dependencies:
       '@inquirer/type': 1.1.2
       '@types/mute-stream': 0.0.1
-      '@types/node': 20.5.7
+      '@types/node': 20.5.8
       '@types/wrap-ansi': 3.0.0
       ansi-escapes: 4.3.2
       chalk: 4.1.2
@@ -613,11 +613,11 @@ packages:
   /@types/mute-stream@0.0.1:
     resolution: {integrity: sha512-0yQLzYhCqGz7CQPE3iDmYjhb7KMBFOP+tBkyw+/Y2YyDI5wpS7itXXxneN1zSsUwWx3Ji6YiVYrhAnpQGS/vkw==}
     dependencies:
-      '@types/node': 20.5.7
+      '@types/node': 20.5.8
     dev: true
 
-  /@types/node@20.5.7:
-    resolution: {integrity: sha512-dP7f3LdZIysZnmvP3ANJYTSwg+wLLl8p7RqniVlV7j+oXSXAbt9h0WIBFmJy5inWZoX9wZN6eXx+YXd9Rh3RBA==}
+  /@types/node@20.5.8:
+    resolution: {integrity: sha512-eajsR9aeljqNhK028VG0Wuw+OaY5LLxYmxeoXynIoE6jannr9/Ucd1LL0hSSoafk5LTYG+FfqsyGt81Q6Zkybw==}
     dev: true
 
   /@types/prop-types@15.7.5:
