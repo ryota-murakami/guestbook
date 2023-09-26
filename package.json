@@ -9,7 +9,8 @@
     "lint": "eslint . --ext .ts,.tsx,.js,jsx,mjs,cjs",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,jsx,mjs,cjs --fix",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prettier": "prettier --write --ignore-unknown ."
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
@@ -41,7 +42,7 @@
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-prettier": "^5.0.0",
-    "eslint-plugin-sort-keys-fix": "^1.1.2",
+    "eslint-plugin-sort-keys-custom-order": "^1.0.5",
     "postcss": "^8.4.30",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.4",

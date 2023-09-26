@@ -103,8 +103,8 @@ const Form = () => {
       onSubmit={(event) => {
         event.preventDefault()
         postMessage.mutate({
-          message,
           name: session.user?.name as string,
+          message,
         })
         setMessage('')
       }}
