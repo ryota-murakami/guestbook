@@ -1,4 +1,4 @@
-# T3 Learning App
+# Guestbook
 
 Follwing [Build a full stack app with create-t3-app](https://dev.to/nexxeln/build-a-full-stack-app-with-create-t3-app-5e1e)
 
