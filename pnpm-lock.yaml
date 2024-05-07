@@ -10,7 +10,7 @@ dependencies:
     version: 1.0.7(@prisma/client@5.13.0)(next-auth@4.24.7)
   '@t3-oss/env-nextjs':
     specifier: 0.10.1
-    version: 0.10.1(typescript@5.4.5)(zod@3.23.6)
+    version: 0.10.1(typescript@5.4.5)(zod@3.23.7)
   '@tanstack/react-query':
     specifier: 4.36.1
     version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
@@ -45,8 +45,8 @@ dependencies:
     specifier: 2.2.1
     version: 2.2.1
   zod:
-    specifier: 3.23.6
-    version: 3.23.6
+    specifier: 3.23.7
+    version: 3.23.7
 
 devDependencies:
   '@prisma/client':
@@ -511,7 +511,7 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@t3-oss/env-core@0.10.1(typescript@5.4.5)(zod@3.23.6):
+  /@t3-oss/env-core@0.10.1(typescript@5.4.5)(zod@3.23.7):
     resolution: {integrity: sha512-GcKZiCfWks5CTxhezn9k5zWX3sMDIYf6Kaxy2Gx9YEQftFcz8hDRN56hcbylyAO3t4jQnQ5ifLawINsNgCDpOg==}
     peerDependencies:
       typescript: '>=5.0.0'
@@ -521,10 +521,10 @@ packages:
         optional: true
     dependencies:
       typescript: 5.4.5
-      zod: 3.23.6
+      zod: 3.23.7
     dev: false
 
-  /@t3-oss/env-nextjs@0.10.1(typescript@5.4.5)(zod@3.23.6):
+  /@t3-oss/env-nextjs@0.10.1(typescript@5.4.5)(zod@3.23.7):
     resolution: {integrity: sha512-iy2qqJLnFh1RjEWno2ZeyTu0ufomkXruUsOZludzDIroUabVvHsrSjtkHqwHp1/pgPUzN3yBRHMILW162X7x2Q==}
     peerDependencies:
       typescript: '>=5.0.0'
@@ -533,9 +533,9 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@t3-oss/env-core': 0.10.1(typescript@5.4.5)(zod@3.23.6)
+      '@t3-oss/env-core': 0.10.1(typescript@5.4.5)(zod@3.23.7)
       typescript: 5.4.5
-      zod: 3.23.6
+      zod: 3.23.7
     dev: false
 
   /@tanstack/query-core@4.36.1:
@@ -3321,6 +3321,6 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zod@3.23.6:
-    resolution: {integrity: sha512-RTHJlZhsRbuA8Hmp/iNL7jnfc4nZishjsanDAfEY1QpDQZCahUp3xDzl+zfweE9BklxMUcgBgS1b7Lvie/ZVwA==}
+  /zod@3.23.7:
+    resolution: {integrity: sha512-NBeIoqbtOiUMomACV/y+V3Qfs9+Okr18vR5c/5pHClPpufWOrsx8TENboDPe265lFdfewX2yBtNTLPvnmCxwog==}
     dev: false
