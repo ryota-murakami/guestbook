@@ -1,47 +1,77 @@
 <context>
-# Overview  
-[Provide a high-level overview of your product here. Explain what problem it solves, who it's for, and why it's valuable.]
+# Next.js Pages Router to App Router Migration - PRD
 
-# Core Features  
-[List and describe the main features of your product. For each feature, include:
-- What it does
-- Why it's important
-- How it works at a high level]
+## Project Overview
+The guestbook application is a T3 Stack-based Next.js app that needs migration from Pages Router to App Router architecture. The application allows users to sign in via GitHub OAuth (NextAuth) and post messages to a shared guestbook, which are stored in a database (Prisma).
 
-# User Experience  
-[Describe the user journey and experience. Include:
-- User personas
-- Key user flows
-- UI/UX considerations]
+## Current Architecture
+- **Framework**: Next.js 14.x with Pages Router
+- **API Layer**: tRPC for type-safe APIs
+- **Database**: Prisma ORM with a simple guestbook schema
+- **Authentication**: NextAuth.js (now Auth.js) with GitHub provider
+- **Styling**: Tailwind CSS
+
+## Migration Goals
+1. Convert the application to use Next.js App Router architecture
+2. Preserve all existing functionality without regressions
+3. Modernize the codebase to use React Server Components where appropriate
+4. Update all related dependencies to their latest compatible versions
 </context>
 <PRD>
-# Technical Architecture  
-[Outline the technical implementation details:
-- System components
-- Data models
-- APIs and integrations
-- Infrastructure requirements]
+## Technical Requirements
 
-# Development Roadmap  
-[Break down the development process into phases:
-- MVP requirements
-- Future enhancements
-- Do not think about timelines whatsoever -- all that matters is scope and detailing exactly what needs to be build in each phase so it can later be cut up into tasks]
+### App Router Structure Implementation
+- Create a new `/src/app` directory structure
+- Implement the appropriate layout and page components
+- Convert API routes to the new route handlers format
+- Configure metadata for SEO
 
-# Logical Dependency Chain
-[Define the logical order of development:
-- Which features need to be built first (foundation)
-- Getting as quickly as possible to something usable/visible front end that works
-- Properly pacing and scoping each feature so it is atomic but can also be built upon and improved as development approaches]
+### Auth.js (NextAuth) Migration
+- Update NextAuth configuration to work with App Router
+- Implement server-side session handling
+- Configure client-side authentication where needed
 
-# Risks and Mitigations  
-[Identify potential risks and how they'll be addressed:
-- Technical challenges
-- Figuring out the MVP that we can build upon
-- Resource constraints]
+### tRPC Integration
+- Update tRPC configuration for App Router compatibility
+- Configure tRPC API route handlers
+- Implement proper client/server boundaries
 
-# Appendix  
-[Include any additional information:
-- Research findings
-- Technical specifications]
+### Prisma & Database
+- Update Prisma client initialization for App Router
+- Ensure database connections are properly managed
+
+## Deliverables
+1. Complete conversion of the application to App Router architecture
+2. All existing functionality maintained with full feature parity
+3. Updated documentation reflecting the new architecture
+4. Comprehensive tests verifying the migration was successful
+
+## Implementation Phases
+1. **Preparation**: Update dependencies and set up basic App Router structure
+2. **Core Configuration**: Implement auth, API routes, and other essential services
+3. **Page Migration**: Convert page components to the new format
+4. **Testing & Optimization**: Verify functionality and optimize performance
+
+## Success Criteria
+- Application runs correctly with App Router
+- All existing features work without regressions
+- Authentication flows work correctly
+- Performance is equal to or better than the original implementation
+- Code is clean, maintainable, and follows best practices
+
+## Technical Implementation Reference
+Key implementation details should include proper handling of:
+- Server Components vs. Client Components
+- Data fetching patterns
+- Route handlers
+- Authentication flows
+- Provider configurations
+
+## Timeline
+The migration is expected to be completed within a reasonable timeframe, depending on the complexity of the codebase and any unexpected issues that may arise during the process.
+
+## Testing Requirements
+- Unit tests for key functionality
+- Integration tests for user flows
+- Manual verification of all features
 </PRD>
