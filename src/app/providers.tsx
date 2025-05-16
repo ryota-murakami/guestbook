@@ -1,15 +1,16 @@
-'use client';
+'use client'
 
-import { SessionProvider } from 'next-auth/react';
-import { useState } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { httpBatchLink } from '@trpc/client';
-import { trpc } from '@/utils/trpc'; // このパスは後で調整が必要
-import superjson from 'superjson';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { httpBatchLink } from '@trpc/client'
+import { SessionProvider } from 'next-auth/react'
+import { useState } from 'react'
+import superjson from 'superjson'
+
+import { trpc } from '~/utils/trpc'
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(() => new QueryClient())
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [
@@ -18,8 +19,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
         }),
       ],
       transformer: superjson,
-    })
-  );
+    }),
+  )
 
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
@@ -28,5 +29,5 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <ReactQueryDevtools />
       </QueryClientProvider>
     </trpc.Provider>
-  );
-} 
+  )
+}
