@@ -13,19 +13,18 @@
     "prettier": "prettier --write --ignore-unknown ."
   },
   "dependencies": {
-    "@next-auth/prisma-adapter": "^1.0.7",
+    "@auth/prisma-adapter": "2.9.1",
     "@t3-oss/env-nextjs": "0.11.0",
-    "@tanstack/react-query": "4.36.1",
-    "@trpc/client": "^10.38.0",
-    "@trpc/next": "^10.38.0",
-    "@trpc/react-query": "^10.38.0",
-    "@trpc/server": "^10.38.0",
-    "next": "14.2.5",
-    "next-auth": "4.24.7",
+    "@tanstack/react-query": "5.76.1",
+    "@trpc/client": "^11.1.2",
+    "@trpc/react-query": "^11.1.2",
+    "@trpc/server": "^11.1.2",
+    "next": "15.3.2",
+    "next-auth": "4.24.11",
+    "prisma": "^5.18.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "prisma": "^5.18.0",
-    "superjson": "2.2.1",
+    "superjson": "2.2.2",
     "zod": "3.23.8"
   },
   "devDependencies": {
