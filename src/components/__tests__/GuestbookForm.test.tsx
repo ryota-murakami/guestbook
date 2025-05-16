@@ -1,4 +1,5 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/dom';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { GuestbookForm } from '../guestbook/GuestbookForm';
 
