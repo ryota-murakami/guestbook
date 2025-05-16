@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
-import { createTRPCRouter, publicProcedure } from '../trpc'
+import { router, publicProcedure } from '@/server/api/trpc'
 
-export const guestbookRouter = createTRPCRouter({
+export const guestbookRouter = router({
   getAll: publicProcedure.query(async ({ ctx }) => {
     try {
       return await ctx.prisma.guestbook.findMany({

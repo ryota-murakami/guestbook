@@ -8,13 +8,12 @@
  */
 
 import { initTRPC, TRPCError } from '@trpc/server'
-import { type CreateNextContextOptions } from '@trpc/server/adapters/next'
-import { type Session } from 'next-auth'
 import superjson from 'superjson'
 import { ZodError } from 'zod'
+import { type Session } from 'next-auth'
 
-import { getServerAuthSession } from '~/server/auth'
-import { prisma } from '~/server/db'
+import { getServerAuthSession } from '@/server/auth'
+import { prisma } from '@/server/db'
 
 /**
  * 1. CONTEXT
@@ -25,6 +24,7 @@ import { prisma } from '~/server/db'
  */
 
 type CreateContextOptions = {
+  headers: Headers | null
   session: Session | null
 }
 
@@ -42,6 +42,7 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     prisma,
     session: opts.session,
+    headers: opts.headers,
   }
 }
 
@@ -51,14 +52,13 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  *
  * @see https://trpc.io/docs/context
  */
-export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-  const { req, res } = opts
-
+export const createTRPCContext = async (opts: { headers: Headers }) => {
   // Get the session from the server using the getServerSession wrapper function
-  const session = await getServerAuthSession({ req, res })
+  const session = await getServerAuthSession()
 
   return createInnerTRPCContext({
     session,
+    headers: opts.headers,
   })
 }
 
@@ -71,7 +71,8 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
  */
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
-  errorFormatter({ error, shape }) {
+  transformer: superjson,
+  errorFormatter({ shape, error }) {
     return {
       ...shape,
       data: {
@@ -81,7 +82,6 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
       },
     }
   },
-  transformer: superjson,
 })
 
 /**
@@ -96,7 +96,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  *
  * @see https://trpc.io/docs/router
  */
-export const createTRPCRouter = t.router
+export const router = t.router
 
 /**
  * Public (unauthenticated) procedure
@@ -108,7 +108,7 @@ export const createTRPCRouter = t.router
 export const publicProcedure = t.procedure
 
 /** Reusable middleware that enforces users are logged in before running the procedure. */
-const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
+const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.session || !ctx.session.user) {
     throw new TRPCError({ code: 'UNAUTHORIZED' })
   }
@@ -129,3 +129,8 @@ const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed)
+
+/**
+ * Create caller is a utility to create a standalone caller for the router
+ */
+export const createCallerFactory = t.createCallerFactory
