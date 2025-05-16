@@ -1,6 +1,7 @@
-import { Providers } from './providers';
-import type { Metadata } from 'next';
-import '@/styles/globals.css';
+import type { Metadata } from 'next'
+
+import { Providers } from './providers'
+import '@/styles/globals.css'
 
 export const metadata: Metadata = {
   title: 'Guestbook App',
@@ -8,12 +9,12 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
   },
-};
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
@@ -21,5 +22,5 @@ export default function RootLayout({
         <Providers>{children}</Providers>
       </body>
     </html>
-  );
-} 
+  )
+}

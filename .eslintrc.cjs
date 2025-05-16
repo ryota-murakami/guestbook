@@ -10,6 +10,8 @@ module.exports = {
   },
   plugins: [],
   root: true,
-  rules: {},
+  rules: {
+    'prettier/prettier': 'off',
+  },
   settings: {},
 }
