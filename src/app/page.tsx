@@ -1,9 +1,27 @@
+import { Metadata } from 'next';
 import { getServerAuthSession } from '@/server/auth';
 import { prisma } from '@/server/db';
 import { SignInButton } from '@/components/auth/SignInButton';
 import { SignOutButton } from '@/components/auth/SignOutButton';
 import { GuestbookForm } from '@/components/guestbook/GuestbookForm';
 import { GuestbookEntries } from '@/components/guestbook/GuestbookEntries';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const entryCount = await prisma.guestbook.count();
+  
+  return {
+    title: 'Home',
+    description: `Join our guestbook community with ${entryCount} entries and leave your own message!`,
+    openGraph: {
+      title: 'Guestbook App - Home',
+      description: `Join our guestbook community with ${entryCount} entries and leave your own message!`,
+    },
+    twitter: {
+      title: 'Guestbook App - Home',
+      description: `Join our guestbook community with ${entryCount} entries and leave your own message!`,
+    },
+  };
+}
 
 export default async function HomePage() {
   const session = await getServerAuthSession();
