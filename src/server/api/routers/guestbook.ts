@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { router, publicProcedure } from '@/server/api/trpc'
+import { router, publicProcedure, protectedProcedure } from '@/server/api/trpc'
 
 export const guestbookRouter = router({
   getAll: publicProcedure.query(async ({ ctx }) => {
@@ -9,32 +9,29 @@ export const guestbookRouter = router({
         orderBy: {
           createdAt: 'desc',
         },
-        select: {
-          name: true,
-          message: true,
-        },
       })
     } catch (error) {
       console.log('error', error)
+      throw new Error('Failed to fetch guestbook entries')
     }
   }),
-  postMessage: publicProcedure
+  postMessage: protectedProcedure
     .input(
       z.object({
-        name: z.string(),
-        message: z.string(),
+        message: z.string().min(1).max(100),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        await ctx.prisma.guestbook.create({
+        return await ctx.prisma.guestbook.create({
           data: {
-            name: input.name,
+            name: ctx.session.user.name ?? 'Anonymous',
             message: input.message,
           },
         })
       } catch (error) {
         console.log(error)
+        throw new Error('Failed to post message')
       }
     }),
 })
