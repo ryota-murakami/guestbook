@@ -7,7 +7,7 @@ import { SessionProvider } from 'next-auth/react'
 import { useState } from 'react'
 import superjson from 'superjson'
 
-import { trpc } from '~/utils/trpc'
+import { trpc } from '@/utils/trpc'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient())
@@ -15,10 +15,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: '/api/trpc', // tRPCエンドポイントへの相対URL
+          url: '/api/trpc',
+          transformer: superjson,
         }),
       ],
-      transformer: superjson,
     }),
   )
 
