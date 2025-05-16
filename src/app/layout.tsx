@@ -1,10 +1,10 @@
 import { Providers } from './providers';
 import type { Metadata } from 'next';
-import '../styles/globals.css';
+import '@/styles/globals.css';
 
 export const metadata: Metadata = {
-  title: 'Guestbook',
-  description: 'Sign our guestbook and leave a message',
+  title: 'Guestbook App',
+  description: 'A simple guestbook application built with the T3 Stack',
   icons: {
     icon: '/favicon.ico',
   },
