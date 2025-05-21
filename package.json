@@ -26,7 +26,7 @@
     "react-dom": "18.2.0",
     "prisma": "^6.8.2",
     "superjson": "2.2.2",
-    "zod": "3.25.8"
+    "zod": "3.25.17"
   },
   "devDependencies": {
     "@prisma/client": "^6.8.2",
