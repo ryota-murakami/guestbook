@@ -1,10 +1,6 @@
 import { z } from 'zod'
 
-import {
-  router,
-  publicProcedure,
-  protectedProcedure,
-} from '@/server/api/trpc'
+import { router, publicProcedure, protectedProcedure } from '@/server/api/trpc'
 
 export const exampleRouter = router({
   getAll: publicProcedure.query(async ({ ctx }) => {

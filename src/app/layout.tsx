@@ -8,8 +8,17 @@ export const metadata: Metadata = {
     default: 'Guestbook App',
     template: '%s | Guestbook App',
   },
-  description: 'A simple guestbook application built with the T3 Stack and Next.js App Router',
-  keywords: ['Next.js', 'React', 'Tailwind CSS', 'Server Components', 'tRPC', 'T3 Stack', 'Guestbook'],
+  description:
+    'A simple guestbook application built with the T3 Stack and Next.js App Router',
+  keywords: [
+    'Next.js',
+    'React',
+    'Tailwind CSS',
+    'Server Components',
+    'tRPC',
+    'T3 Stack',
+    'Guestbook',
+  ],
   authors: [{ name: 'T3 Stack Developer' }],
   creator: 'T3 Stack Team',
   openGraph: {
@@ -17,7 +26,8 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://guestbook-app.vercel.app',
     title: 'Guestbook App',
-    description: 'A simple guestbook application built with the T3 Stack and Next.js App Router',
+    description:
+      'A simple guestbook application built with the T3 Stack and Next.js App Router',
     siteName: 'Guestbook App',
     images: [
       {
@@ -31,7 +41,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Guestbook App',
-    description: 'A simple guestbook application built with the T3 Stack and Next.js App Router',
+    description:
+      'A simple guestbook application built with the T3 Stack and Next.js App Router',
     images: ['/images/og-image.svg'],
   },
   icons: {

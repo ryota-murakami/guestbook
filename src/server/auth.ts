@@ -1,5 +1,9 @@
 import { PrismaAdapter } from '@auth/prisma-adapter'
-import { type NextAuthOptions, getServerSession, type DefaultSession } from 'next-auth'
+import {
+  type NextAuthOptions,
+  getServerSession,
+  type DefaultSession,
+} from 'next-auth'
 import DiscordProvider from 'next-auth/providers/discord'
 import GithubProvider from 'next-auth/providers/github'
 
@@ -37,9 +41,9 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     session({ session, user }) {
       if (session.user) {
-        session.user.id = user.id;
+        session.user.id = user.id
       }
-      return session;
+      return session
     },
   },
   providers: [
@@ -68,4 +72,4 @@ export const authOptions: NextAuthOptions = {
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
-export const getServerAuthSession = () => getServerSession(authOptions)
+export const getServerAuthSession = async () => getServerSession(authOptions)

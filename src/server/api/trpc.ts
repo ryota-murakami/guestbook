@@ -8,9 +8,9 @@
  */
 
 import { initTRPC, TRPCError } from '@trpc/server'
+import { type Session } from 'next-auth'
 import superjson from 'superjson'
 import { ZodError } from 'zod'
-import { type Session } from 'next-auth'
 
 import { getServerAuthSession } from '@/server/auth'
 import { prisma } from '@/server/db'
@@ -108,7 +108,7 @@ export const router = t.router
 export const publicProcedure = t.procedure
 
 /** Reusable middleware that enforces users are logged in before running the procedure. */
-const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
+const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
   if (!ctx.session || !ctx.session.user) {
     throw new TRPCError({ code: 'UNAUTHORIZED' })
   }
