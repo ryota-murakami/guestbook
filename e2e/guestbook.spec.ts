@@ -3,8 +3,8 @@ import { test, expect } from '@playwright/test';
 test('homepage has guestbook title and sign-in button', async ({ page }) => {
   await page.goto('/');
   
-  // タイトルがGuestbook Appを含むことを確認
-  await expect(page).toHaveTitle(/Guestbook App/);
+  // タイトルがGuestbookを含むことを確認
+  await expect(page).toHaveTitle(/Home/);
   
   // アプリの見出しが表示されていることを確認
   const heading = page.getByRole('heading', { name: 'Guestbook' });

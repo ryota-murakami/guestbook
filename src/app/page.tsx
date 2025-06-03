@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const entryCount = await prisma.guestbook.count();
   
   return {
-    title: 'Home',
+    title: 'Guestbook App',
     description: `Join our guestbook community with ${entryCount} entries and leave your own message!`,
     openGraph: {
       title: 'Guestbook App - Home',
