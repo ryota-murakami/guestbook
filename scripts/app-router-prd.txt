@@ -1,0 +1,336 @@
+<context>
+Project: Guestbook App - Next.js App Router Migration
+Focus: Migrating the T3 Stack Guestbook application from Next.js Pages Router to the App Router architecture, including updates to tRPC, Auth.js, and Prisma integration, while preserving all existing functionality.
+</context>
+
+<PRD>
+# Next.js Pages Router to App Router Migration - PRD
+
+## 1. Project Overview
+The guestbook application is a T3 Stack-based Next.js app that needs migration from Pages Router to App Router architecture. The application allows users to sign in via GitHub OAuth (NextAuth) and post messages to a shared guestbook, which are stored in a database (Prisma).
+
+## 2. Current Architecture
+- **Framework**: Next.js (currently Pages Router, migrating to App Router)
+- **API Layer**: tRPC for type-safe APIs
+- **Database**: Prisma ORM with a simple guestbook schema
+- **Authentication**: NextAuth.js (now Auth.js) with GitHub provider
+- **Styling**: Tailwind CSS
+- **Project Structure (Current)**:
+    - Standard T3 App architecture with Pages Router
+    - `src/pages` contains page components and API routes
+    - `src/server` contains tRPC routers and server-side logic
+    - `prisma` directory with database schema for the guestbook
+- **Key Components (Current)**:
+    - **Pages**: Main page component rendering the guestbook interface
+    - **API Routes**: NextAuth and tRPC endpoints in `pages/api/`
+    - **tRPC Setup**: Server-side APIs handling guestbook operations
+    - **Prisma Models**: Primarily the Guestbook entry model
+
+## 3. Migration Goals
+1. Convert the application to use Next.js App Router architecture.
+2. Preserve all existing functionality without regressions.
+3. Modernize the codebase to use React Server Components where appropriate.
+4. Update all related dependencies to their latest compatible versions.
+
+## 4. Technical Requirements
+
+### 4.1. Next.js App Router Migration & Structure
+- **Directory Structure Changes**:
+    - Migrate from `/src/pages` to `/src/app` directory structure.
+    - Convert page files to use new `page.tsx` convention.
+    - Move layouts to dedicated `layout.tsx` files.
+- **Target App Router Structure**:
+  ```
+  src/
+    app/
+      api/
+        auth/
+          [...nextauth]/
+            route.ts
+        trpc/
+          [trpc]/
+            route.ts
+      layout.tsx
+      page.tsx
+      providers.tsx  (client-side providers)
+  ```
+- **Route Handlers**:
+    - Convert API routes from `pages/api/*` to `app/api/*/route.ts` format.
+    - Implement the new `Request` / `Response` API instead of `req`/`res`.
+- **Metadata and SEO**:
+    - Update metadata handling using new App Router `metadata` API.
+    - Configure static and dynamic metadata exports.
+- **Server Components**:
+    - Convert appropriate components to React Server Components.
+    - Add `'use client'` directive to client components where necessary (primarily at the top-level boundary).
+
+### 4.2. Auth.js (NextAuth) Migration
+- **Configuration**:
+    - Migrate from `pages/api/auth/[...nextauth].ts` to the new Auth.js App Router format in `src/app/api/auth/[...nextauth]/route.ts`.
+    - Set up `SessionProvider` for client components.
+    - Update session handling throughout the application.
+- **Auth Hooks & Utilities**:
+    - Update auth hooks and utilities to support App Router.
+    - Implement server-side session handling.
+- **`src/server/auth.ts` Implementation**:
+  ```typescript
+  // src/server/auth.ts
+  import { PrismaAdapter } from '@auth/prisma-adapter';
+  import { getServerSession, type NextAuthOptions } from 'next-auth';
+  import GithubProvider from 'next-auth/providers/github';
+  import { prisma } from '@/server/db';
+  import { env } from '@/env.mjs';
+
+  export const authOptions: NextAuthOptions = {
+    callbacks: {
+      session({ session, user }) {
+        if (session.user) {
+          session.user.id = user.id;
+        }
+        return session;
+      },
+    },
+    adapter: PrismaAdapter(prisma),
+    providers: [
+      GithubProvider({
+        clientId: env.GITHUB_CLIENT_ID,
+        clientSecret: env.GITHUB_CLIENT_SECRET,
+      }),
+    ],
+  };
+
+  export const getServerAuthSession = () => getServerSession(authOptions);
+  ```
+- **Auth Route Handler (`src/app/api/auth/[...nextauth]/route.ts`)**:
+  ```typescript
+  // src/app/api/auth/[...nextauth]/route.ts
+  import NextAuth from 'next-auth';
+  import { authOptions } from '@/server/auth';
+
+  const handler = NextAuth(authOptions);
+  export { handler as GET, handler as POST };
+  ```
+
+### 4.3. tRPC Integration
+- **tRPC Configuration**:
+    - Update tRPC configuration for App Router compatibility.
+    - Move tRPC API endpoint to a new route handler: `src/app/api/trpc/[trpc]/route.ts`.
+- **`src/server/api/trpc.ts` Implementation**:
+  ```typescript
+  // src/server/api/trpc.ts
+  import { initTRPC, TRPCError } from '@trpc/server';
+  import superjson from 'superjson';
+  import { ZodError } from 'zod';
+  import { getServerAuthSession } from '@/server/auth'; // Adjusted path
+  import { prisma } from '@/server/db'; // Adjusted path
+
+  export const createTRPCContext = async (opts: { headers: Headers }) => {
+    const session = await getServerAuthSession();
+    return {
+      prisma,
+      session,
+      ...opts,
+    };
+  };
+
+  const t = initTRPC.context<typeof createTRPCContext>().create({
+    transformer: superjson,
+    errorFormatter({ shape, error }) {
+      return {
+        ...shape,
+        data: {
+          ...shape.data,
+          zodError: error.cause instanceof ZodError ? error.cause.flatten() : null,
+        },
+      };
+    },
+  });
+
+  export const createCallerFactory = t.createCallerFactory;
+  export const router = t.router;
+  export const publicProcedure = t.procedure;
+  export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
+    if (!ctx.session || !ctx.session.user) {
+      throw new TRPCError({ code: 'UNAUTHORIZED' });
+    }
+    return next({
+      ctx: {
+        ...ctx,
+        session: { ...ctx.session, user: ctx.session.user },
+      },
+    });
+  });
+  ```
+- **tRPC API Route Handler (`src/app/api/trpc/[trpc]/route.ts`)**:
+  ```typescript
+  // src/app/api/trpc/[trpc]/route.ts
+  import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
+  import { appRouter } from '@/server/api/root'; // Ensure this path is correct
+  import { createTRPCContext } from '@/server/api/trpc'; // Ensure this path is correct
+
+  const handler = (req: Request) =>
+    fetchRequestHandler({
+      endpoint: '/api/trpc',
+      req,
+      router: appRouter,
+      createContext: () => createTRPCContext({ headers: req.headers }),
+    });
+
+  export { handler as GET, handler as POST };
+  ```
+- **Client-Side Providers & Invocation**:
+    - Create an appropriate provider structure for client components in `src/app/providers.tsx`.
+    - Ensure proper data hydration between server and client.
+    - Update how tRPC is invoked from client components.
+    - Handle server-side data prefetching with React Server Components.
+- **`src/app/providers.tsx` Implementation**:
+  ```typescript
+  // src/app/providers.tsx
+  'use client';
+
+  import { SessionProvider } from 'next-auth/react';
+  import { useState } from 'react';
+  import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+  import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+  import { httpBatchLink } from '@trpc/client';
+  import { trpc } from '@/utils/trpc'; // Ensure this path is correct
+  import superjson from 'superjson';
+
+  export function Providers({ children }: { children: React.ReactNode }) {
+    const [queryClient] = useState(() => new QueryClient());
+    const [trpcClient] = useState(() =>
+      trpc.createClient({
+        links: [
+          httpBatchLink({
+            url: '/api/trpc', // Relative URL to the tRPC endpoint
+          }),
+        ],
+        transformer: superjson,
+      })
+    );
+
+    return (
+      <trpc.Provider client={trpcClient} queryClient={queryClient}>
+        <QueryClientProvider client={queryClient}>
+          <SessionProvider>{children}</SessionProvider>
+          <ReactQueryDevtools />
+        </QueryClientProvider>
+      </trpc.Provider>
+    );
+  }
+  ```
+
+### 4.4. Prisma & Database
+- **Database Client**:
+    - Update Prisma client instantiation for App Router if necessary (typically handled in `src/server/db.ts` and should largely remain compatible).
+    - Ensure proper database connection management.
+    - Create/verify appropriate utility functions for database access.
+
+## 5. Deliverables
+1. Complete conversion of the application to Next.js App Router architecture.
+2. All existing functionality maintained with full feature parity.
+3. Updated documentation (this PRD serves as the primary updated document for migration).
+4. Comprehensive tests verifying the migration was successful.
+
+## 6. Implementation Phases (Step-by-Step Plan)
+
+### Phase 1: Preparation
+1.  **Dependency Updates**:
+    *   Update Next.js to version 14.x (or latest stable).
+    *   Update tRPC, Prisma, and NextAuth (Auth.js) to their latest versions compatible with App Router.
+    *   Update other dependencies as needed (e.g., `@tanstack/react-query`).
+2.  **Create App Directory Structure**:
+    *   Set up the `/src/app` directory.
+    *   Prepare basic `layout.tsx` and `page.tsx` files.
+
+### Phase 2: Core Configuration
+1.  **App Router Setup**:
+    *   Create root `layout.tsx` with HTML, body structure.
+    *   Implement `src/app/providers.tsx` for client-side providers (SessionProvider, QueryClientProvider, trpc.Provider).
+    *   Configure global metadata in the root layout.
+2.  **Auth.js Migration**:
+    *   Create the new Auth.js configuration in `src/server/auth.ts`.
+    *   Implement the Auth.js route handler in `src/app/api/auth/[...nextauth]/route.ts`.
+    *   Integrate `SessionProvider` in `src/app/providers.tsx`.
+    *   Implement/update server-side session utilities (e.g., `getServerAuthSession`).
+3.  **tRPC API Routes & Configuration**:
+    *   Update `src/server/api/trpc.ts` as detailed above.
+    *   Create the new tRPC route handler in `src/app/api/trpc/[trpc]/route.ts`.
+    *   Integrate tRPC providers in `src/app/providers.tsx`.
+
+### Phase 3: Page & Component Migration
+1.  **Home Page Migration (`src/app/page.tsx`)**:
+    *   Convert the existing index page (`src/pages/index.tsx`) to the App Router format (`src/app/page.tsx`).
+    *   Refactor data fetching to align with Server Components (async components) or use tRPC client calls in Client Components.
+    *   Ensure authentication status is correctly handled and displayed.
+2.  **Component Review and `'use client'`/`'use server'` Directives**:
+    *   Review all components. Identify components that require client-side interactivity (hooks, event handlers) and mark them with `'use client'`.
+    *   Leverage Server Components for data fetching and rendering static parts where possible.
+    *   Ensure any server-only code (e.g., direct database access not through tRPC) is in Server Components or `src/server/**` files.
+3.  **Additional Pages (if any)**:
+    *   Migrate any additional pages to the App Router format.
+    *   Ensure consistent layout and styling.
+
+### Phase 4: Testing & Optimization
+1.  **Testing (as per Section 8)**:
+    *   Verify all functionality works correctly.
+    *   Test authentication flows (sign in, sign out, protected routes/actions).
+    *   Ensure database operations (guestbook entry creation, listing) work properly.
+2.  **Performance Optimization**:
+    *   Optimize server/client component boundaries.
+    *   Implement proper caching strategies if applicable (Next.js fetch, React Cache).
+    *   Review and optimize data fetching patterns.
+
+## 7. Success Criteria
+- Application runs correctly with App Router.
+- All existing features (user sign-in via GitHub, posting messages, viewing guestbook) work without regressions.
+- Authentication flows work correctly and securely.
+- Performance is equal to or better than the original Pages Router implementation.
+- Code is clean, maintainable, and follows Next.js App Router best practices.
+
+## 8. Testing Strategy & Requirements
+
+### 8.1. Unit Testing
+- Test individual API route handlers (Auth.js, tRPC) (using Vitest).
+- Test tRPC procedures (input validation, output) (using Vitest).
+- Test utility functions and critical components (using Vitest).
+
+### 8.2. Integration Testing
+- Test full user flows (using Playwright):
+    - User signs in with GitHub.
+    - Authenticated user posts a guestbook message.
+    - Guestbook messages are displayed correctly.
+- Verify client-server interactions (tRPC calls, form submissions) (using Playwright).
+- Test database operations via Prisma (can be part of Playwright tests or separate integration tests).
+
+### 8.3. End-to-End Testing (using Playwright)
+- Test complete application functionality in a browser.
+- Verify all pages and routes work correctly.
+- Test authentication and authorization scenarios.
+
+## 9. Migration Risks and Mitigations
+
+1.  **Data Integrity during Migration**:
+    *   **Risk**: Unlikely with this migration as schema changes are not planned.
+    *   **Mitigation**: Ensure Prisma schema remains consistent. Back up database before deployment if any related changes were to occur.
+2.  **Authentication Flow Disruption**:
+    *   **Risk**: Users losing sessions or encountering login issues during/after deployment due to changes in NextAuth configuration or session handling.
+    *   **Mitigation**: Thoroughly test the new Auth.js setup. Ensure auth cookie format and session management are compatible or plan for users needing to re-authenticate post-migration.
+3.  **Performance Regression**:
+    *   **Risk**: Inappropriate server/client component boundaries, incorrect data fetching patterns, or excessive client-side rendering causing performance issues.
+    *   **Mitigation**: Carefully design component boundaries. Profile application performance before and after migration. Utilize Server Components for data fetching and server-side rendering where possible.
+4.  **Dependency Issues**:
+    *   **Risk**: Incompatibilities between updated dependencies.
+    *   **Mitigation**: Update dependencies incrementally if possible. Test thoroughly after each update. Refer to official migration guides for each library.
+5.  **Build/Deployment Issues**:
+    *   **Risk**: New App Router structure or dependencies causing issues with the build process or Vercel deployment.
+    *   **Mitigation**: Test the build process locally. Deploy to a staging/preview environment on Vercel before production.
+
+## 10. Timeline
+The migration is expected to be completed within a reasonable timeframe. A detailed task breakdown and estimation will be managed using Taskmaster.
+
+(Taskmaster-specific information, if explicitly needed for this PRD, would be integrated here based on the information retrieved from Context7. However, the primary focus of this PRD is the Next.js migration itself. Taskmaster would be the tool used to manage the tasks derived from this PRD.)
+
+## 11. Conclusion
+This migration plan provides a structured approach to moving the guestbook application from Next.js Pages Router to App Router. By following this phased approach, we can ensure a smooth transition while maintaining all existing functionality and leveraging the benefits of the new App Router architecture, including React Server Components.
+</PRD> 

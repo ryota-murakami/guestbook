@@ -1,0 +1,6 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#111827"/>
+  <rect x="50" y="50" width="1100" height="530" rx="15" stroke="white" stroke-opacity="0.1" stroke-width="2"/>
+  <text x="600" y="250" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="white" text-anchor="middle">Guestbook App</text>
+  <text x="600" y="350" font-family="Arial, sans-serif" font-size="36" fill="#9CA3AF" text-anchor="middle">Built with the T3 Stack and Next.js App Router</text>
+</svg> 

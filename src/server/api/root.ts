@@ -1,7 +1,7 @@
 import { guestbookRouter } from './routers/guestbook'
-import { createTRPCRouter } from './trpc'
+import { router } from '@/server/api/trpc'
 
-export const appRouter = createTRPCRouter({
+export const appRouter = router({
   guestbook: guestbookRouter,
 })
 

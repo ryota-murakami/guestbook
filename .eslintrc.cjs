@@ -1,7 +1,7 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
   env: {},
-  extends: ['ts-prefixer'],
+  extends: ['ts-prefixer', 'next/core-web-vitals'],
   globals: {},
   overrides: [],
   parser: '@typescript-eslint/parser',
@@ -10,6 +10,8 @@ module.exports = {
   },
   plugins: [],
   root: true,
-  rules: {},
+  rules: {
+    'prettier/prettier': 'off',
+  },
   settings: {},
 }
