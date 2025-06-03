@@ -52,8 +52,8 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.DISCORD_CLIENT_SECRET,
     }),
     GithubProvider({
-      clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET,
+      clientId: env.GH_CLIIENT_ID,
+      clientSecret: env.GH_CLIIENT_SECRET,
     }),
     /**
      * ...add more providers here.
