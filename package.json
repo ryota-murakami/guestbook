@@ -10,7 +10,8 @@
     "lint:fix": "eslint . --ext .ts,.tsx,.js,jsx,mjs,cjs --fix",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "prettier": "prettier --write --ignore-unknown ."
+    "prettier": "prettier --write --ignore-unknown .",
+    "e2e": "playwright test"
   },
   "dependencies": {
     "@auth/prisma-adapter": "2.9.1",
