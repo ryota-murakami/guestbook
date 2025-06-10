@@ -11,7 +11,7 @@ vi.mock('@/utils/trpc', () => ({
   trpc: {
     guestbook: {
       getAll: {
-        useQuery: (...args: any[]) => mockUseQuery(...args),
+        useQuery: (...args: unknown[]) => mockUseQuery(...args),
       },
     },
   },

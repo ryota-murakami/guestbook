@@ -36,11 +36,11 @@ describe('GuestbookForm', () => {
 
     // Update the mock implementation
     const { trpc } = await import('@/utils/trpc')
-    ;(trpc.guestbook.postMessage.useMutation as any).mockReturnValue({
+    ;(trpc.guestbook.postMessage.useMutation as ReturnType<typeof vi.fn>).mockReturnValue({
       mutate: mockMutate,
       isPending: false,
     })
-    ;(trpc.useContext as any).mockReturnValue({
+    ;(trpc.useContext as ReturnType<typeof vi.fn>).mockReturnValue({
       guestbook: {
         getAll: {
           invalidate: mockInvalidate,
@@ -93,7 +93,7 @@ describe('GuestbookForm', () => {
   it('should show a pending state when submitting', async () => {
     // Mock the mutation to show pending state
     const { trpc } = await import('@/utils/trpc')
-    ;(trpc.guestbook.postMessage.useMutation as any).mockReturnValue({
+    ;(trpc.guestbook.postMessage.useMutation as ReturnType<typeof vi.fn>).mockReturnValue({
       mutate: mockMutate,
       isPending: true,
     })

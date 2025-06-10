@@ -10,8 +10,8 @@ const mockSignOut = vi.fn()
 
 // Mock the next-auth/react module
 vi.mock('next-auth/react', () => ({
-  signIn: (...args: any[]) => mockSignIn(...args),
-  signOut: (...args: any[]) => mockSignOut(...args),
+  signIn: (...args: unknown[]) => mockSignIn(...args),
+  signOut: (...args: unknown[]) => mockSignOut(...args),
 }))
 
 describe('Auth Buttons', () => {

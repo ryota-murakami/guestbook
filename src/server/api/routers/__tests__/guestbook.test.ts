@@ -46,7 +46,7 @@ describe('guestbook router', () => {
         { id: '1', message: 'Hello', name: 'Test User', createdAt: new Date() },
       ]
 
-      ;(prisma.guestbook.findMany as any).mockResolvedValue(mockEntries)
+      ;(prisma.guestbook.findMany as ReturnType<typeof vi.fn>).mockResolvedValue(mockEntries)
 
       const caller = createCaller({
         prisma,
@@ -63,7 +63,7 @@ describe('guestbook router', () => {
     })
 
     it('should handle errors', async () => {
-      ;(prisma.guestbook.findMany as any).mockRejectedValue(
+      ;(prisma.guestbook.findMany as ReturnType<typeof vi.fn>).mockRejectedValue(
         new Error('Database error'),
       )
 
@@ -87,14 +87,14 @@ describe('guestbook router', () => {
         name: 'Test User',
         createdAt: new Date(),
       }
-      ;(prisma.guestbook.create as any).mockResolvedValue(mockEntry)
+      ;(prisma.guestbook.create as ReturnType<typeof vi.fn>).mockResolvedValue(mockEntry)
 
       const caller = createCaller({
         prisma,
         session: {
           user: { id: 'user1', name: 'Test User' },
           expires: new Date().toISOString(),
-        } as any,
+        } as Parameters<typeof createCaller>[0]['session'],
         headers: new Headers(),
       })
 
@@ -118,14 +118,14 @@ describe('guestbook router', () => {
         name: 'Anonymous',
         createdAt: new Date(),
       }
-      ;(prisma.guestbook.create as any).mockResolvedValue(mockEntry)
+      ;(prisma.guestbook.create as ReturnType<typeof vi.fn>).mockResolvedValue(mockEntry)
 
       const caller = createCaller({
         prisma,
         session: {
           user: { id: 'user1', name: null },
           expires: new Date().toISOString(),
-        } as any,
+        } as Parameters<typeof createCaller>[0]['session'],
         headers: new Headers(),
       })
 
@@ -140,7 +140,7 @@ describe('guestbook router', () => {
     })
 
     it('should handle errors', async () => {
-      ;(prisma.guestbook.create as any).mockRejectedValue(
+      ;(prisma.guestbook.create as ReturnType<typeof vi.fn>).mockRejectedValue(
         new Error('Database error'),
       )
 
@@ -149,7 +149,7 @@ describe('guestbook router', () => {
         session: {
           user: { id: 'user1', name: 'Test User' },
           expires: new Date().toISOString(),
-        } as any,
+        } as Parameters<typeof createCaller>[0]['session'],
         headers: new Headers(),
       })
 
