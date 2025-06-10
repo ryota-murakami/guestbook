@@ -10,6 +10,7 @@
     "lint": "eslint . --ext .ts,.tsx,.js,jsx,mjs,cjs",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,jsx,mjs,cjs --fix",
     "start": "next start",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "prettier": "prettier --write --ignore-unknown .",
     "e2e": "playwright test"
