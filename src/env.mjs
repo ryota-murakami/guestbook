@@ -19,8 +19,8 @@ export const env = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
-    GH_CLIIENT_ID: process.env.GH_CLIIENT_ID,
-    GH_CLIIENT_SECRET: process.env.GH_CLIIENT_SECRET,
+    GH_CLIENT_ID: process.env.GH_CLIENT_ID,
+    GH_CLIENT_SECRET: process.env.GH_CLIENT_SECRET,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NODE_ENV: process.env.NODE_ENV,
@@ -35,8 +35,8 @@ export const env = createEnv({
     // Add `.min(1) on ID and SECRET if you want to make sure they're not empty
     DISCORD_CLIENT_ID: z.string(),
     DISCORD_CLIENT_SECRET: z.string(),
-    GH_CLIIENT_ID: z.string(),
-    GH_CLIIENT_SECRET: z.string(),
+    GH_CLIENT_ID: z.string(),
+    GH_CLIENT_SECRET: z.string(),
     NEXTAUTH_SECRET:
       process.env.NODE_ENV === 'production'
         ? z.string().min(1)

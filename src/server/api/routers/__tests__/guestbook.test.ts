@@ -5,8 +5,8 @@ vi.mock('@/env.mjs', () => ({
   env: {
     DISCORD_CLIENT_ID: 'mock-discord-id',
     DISCORD_CLIENT_SECRET: 'mock-discord-secret',
-    GH_CLIIENT_ID: 'mock-github-id',
-    GH_CLIIENT_SECRET: 'mock-github-secret',
+    GH_CLIENT_ID: 'mock-github-id',
+    GH_CLIENT_SECRET: 'mock-github-secret',
     NEXTAUTH_SECRET: 'mock-nextauth-secret',
     NEXTAUTH_URL: 'http://localhost:3000',
     DATABASE_URL: 'mock-database-url',
