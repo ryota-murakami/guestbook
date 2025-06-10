@@ -30,8 +30,10 @@ vi.mock('@/server/db', () => ({
 
 // モックされたPrisma clientをインポート
 import { appRouter } from '@/server/api/root'
-import { createCallerFactory } from '@/server/api/trpc'
+import { createCallerFactory, type createTRPCContext } from '@/server/api/trpc'
 import { prisma } from '@/server/db'
+
+type TRPCContext = Awaited<ReturnType<typeof createTRPCContext>>
 
 describe('guestbook router', () => {
   const createCaller = createCallerFactory(appRouter)
@@ -94,7 +96,7 @@ describe('guestbook router', () => {
         session: {
           user: { id: 'user1', name: 'Test User' },
           expires: new Date().toISOString(),
-        } as Parameters<typeof createCaller>[0]['session'],
+        } as TRPCContext['session'],
         headers: new Headers(),
       })
 
@@ -125,7 +127,7 @@ describe('guestbook router', () => {
         session: {
           user: { id: 'user1', name: null },
           expires: new Date().toISOString(),
-        } as Parameters<typeof createCaller>[0]['session'],
+        } as TRPCContext['session'],
         headers: new Headers(),
       })
 
@@ -149,7 +151,7 @@ describe('guestbook router', () => {
         session: {
           user: { id: 'user1', name: 'Test User' },
           expires: new Date().toISOString(),
-        } as Parameters<typeof createCaller>[0]['session'],
+        } as TRPCContext['session'],
         headers: new Headers(),
       })
 
