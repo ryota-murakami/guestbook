@@ -1,5 +1,6 @@
 {
   "github": {
     "silent": true
-  }
+  },
+  "installCommand": "corepack enable && pnpm install"
 }
