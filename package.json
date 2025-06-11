@@ -66,20 +66,5 @@
   },
   "volta": {
     "node": "22.16.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "19.1.6",
-      "@types/react-dom": "19.1.5"
-    },
-    "onlyBuiltDependencies": [
-      "@prisma/client",
-      "@prisma/engines",
-      "@tailwindcss/oxide",
-      "esbuild",
-      "prisma",
-      "sharp",
-      "unrs-resolver"
-    ]
   }
 }
