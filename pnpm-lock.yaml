@@ -16,7 +16,7 @@ importers:
         version: 1.0.7(@prisma/client@6.9.0(prisma@6.9.0(typescript@5.8.3))(typescript@5.8.3))(next-auth@4.24.11(next@15.3.3(@babel/core@7.27.4)(@playwright/test@1.53.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0))
       '@t3-oss/env-nextjs':
         specifier: 0.13.7
-        version: 0.13.7(typescript@5.8.3)(zod@3.25.49)
+        version: 0.13.7(typescript@5.8.3)(zod@3.25.65)
       '@tailwindcss/postcss':
         specifier: ^4.1.8
         version: 4.1.8
@@ -57,8 +57,8 @@ importers:
         specifier: 2.2.2
         version: 2.2.2
       zod:
-        specifier: 3.25.49
-        version: 3.25.49
+        specifier: 3.25.65
+        version: 3.25.65
     devDependencies:
       '@playwright/test':
         specifier: ^1.52.0
@@ -3150,8 +3150,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  zod@3.25.49:
-    resolution: {integrity: sha512-JMMPMy9ZBk3XFEdbM3iL1brx4NUSejd6xr3ELrrGEfGb355gjhiAWtG3K5o+AViV/3ZfkIrCzXsZn6SbLwTR8Q==}
+  zod@3.25.65:
+    resolution: {integrity: sha512-kMyE2qsXK1p+TAvO7zsf5wMFiCejU3obrUDs9bR1q5CBKykfvp7QhhXrycUylMoOow0iEUSyjLlZZdCsHwSldQ==}
 
 snapshots:
 
@@ -3737,17 +3737,17 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@t3-oss/env-core@0.13.7(typescript@5.8.3)(zod@3.25.49)':
+  '@t3-oss/env-core@0.13.7(typescript@5.8.3)(zod@3.25.65)':
     optionalDependencies:
       typescript: 5.8.3
-      zod: 3.25.49
+      zod: 3.25.65
 
-  '@t3-oss/env-nextjs@0.13.7(typescript@5.8.3)(zod@3.25.49)':
+  '@t3-oss/env-nextjs@0.13.7(typescript@5.8.3)(zod@3.25.65)':
     dependencies:
-      '@t3-oss/env-core': 0.13.7(typescript@5.8.3)(zod@3.25.49)
+      '@t3-oss/env-core': 0.13.7(typescript@5.8.3)(zod@3.25.65)
     optionalDependencies:
       typescript: 5.8.3
-      zod: 3.25.49
+      zod: 3.25.65
 
   '@tailwindcss/node@4.1.8':
     dependencies:
@@ -6265,4 +6265,4 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod@3.25.49: {}
+  zod@3.25.65: {}
