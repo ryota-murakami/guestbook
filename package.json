@@ -60,7 +60,7 @@
     "prettier-plugin-tailwindcss": "^0.6.12",
     "tailwindcss": "^4.1.10",
     "typescript": "^5.8.3",
-    "vitest": "^3.2.0"
+    "vitest": "^3.2.4"
   },
   "ct3aMetadata": {
     "initVersion": "7.13.1"
