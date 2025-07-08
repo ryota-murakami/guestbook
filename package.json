@@ -27,7 +27,7 @@
     "@trpc/next": "^11.1.2",
     "@trpc/react-query": "^11.1.2",
     "@trpc/server": "^11.1.2",
-    "next": "15.3.4",
+    "next": "15.3.5",
     "next-auth": "4.24.11",
     "prisma": "^6.10.1",
     "react": "19.1.0",
